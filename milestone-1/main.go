@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -36,16 +35,6 @@ func goDotEnvVariable(key string) string {
 	}
 
 	return os.Getenv(key)
-}
-
-func indexHandler(w http.ResponseWriter, req *http.Request) {
-
-	fmt.Fprintf(w, "Hello from \\!\n")
-}
-
-func githubCallbackHandler(w http.ResponseWriter, req *http.Request) {
-
-	fmt.Fprintf(w, "Hello from /github/callback!\n")
 }
 
 func main() {
