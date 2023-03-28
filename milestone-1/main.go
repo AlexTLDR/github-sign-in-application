@@ -1,6 +1,12 @@
 package main
 
-import "golang.org/x/oauth2"
+import (
+	"log"
+	"os"
+
+	"github.com/joho/godotenv"
+	"golang.org/x/oauth2"
+)
 
 // type Config struct {
 // 	ClientID     string
@@ -11,13 +17,23 @@ import "golang.org/x/oauth2"
 // }
 
 var oauthConf = &oauth2.Config{
-	ClientID:     "YOUR_CLIENT_ID",
-	ClientSecret: "YOUR_CLIENT_SECRET",
-	Scopes:       []string{"SCOPE1", "SCOPE2"},
+	ClientID:     goDotEnvVariable("client ID"),
+	ClientSecret: goDotEnvVariable("secret"),
+	Scopes:       []string{"repo", "user"},
 	Endpoint: oauth2.Endpoint{
 		AuthURL:  "https://provider.com/o/oauth2/auth",
 		TokenURL: "https://provider.com/o/oauth2/token",
 	},
+}
+
+func goDotEnvVariable(key string) string {
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	return os.Getenv(key)
 }
 
 func main() {
